@@ -32,7 +32,6 @@ export default function AppWeather() {
       });
       setSearch("")
   };
-
   
   
   return (
@@ -45,7 +44,6 @@ export default function AppWeather() {
               </button >
             </form>
       {isLoading ? (<Loading/>) : weather &&(
-
       <div className={weather ?"weatherOpen":"weather" }>
         <div className={styles.headerWeather}>
           <h1 className={styles.weatherTitle}>{weather.name}</h1>
