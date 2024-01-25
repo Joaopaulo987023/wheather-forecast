@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDroplet, faLocationDot, faMagnifyingGlass, faTemperatureHigh, faTemperatureLow, faWind } from '@fortawesome/free-solid-svg-icons'
 import Loading from '../Loading/Loading';
+import { useNavigate } from "react-router-dom";
 
 export default function AppWeather() {
   const api = {
@@ -16,19 +17,24 @@ export default function AppWeather() {
   const [search, setSearch] = useState("");
   const [weather, setWeather] = useState(null);
   const [isLoading,setIsLoading]=useState(false);
-  console.log(weather)
 
-  /*
-    Search button is pressed. Make a fetch call to the Open Weather Map API.
-  */
+  const navigate = useNavigate();
+  
   const searchPressed = (e) => {
       e.preventDefault();
       setIsLoading(true);
       fetch(`${api.base}weather?q=${search}&appid=${api.key}&units=metric&lang=pt_br`)
       .then((res) => res.json())
       .then((result) => {
-        setWeather(result);
-        setIsLoading(false);
+        if(result.cod === 200){
+          setWeather(result);
+          setIsLoading(false);
+        }else{
+          setWeather(null);
+          setIsLoading(false);
+          navigate('./PagErro');
+        }
+       
       });
       setSearch("")
   };
@@ -38,8 +44,8 @@ export default function AppWeather() {
 <div className={styles.container}>
             <form className={styles.form} >
               <FontAwesomeIcon icon={faLocationDot} />
-              <input type="search" placeholder='Buscar cidade' value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
-              <button onClick={searchPressed}>
+              <input type="search" placeholder='Buscar cidade' required value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
+              <button disabled={!search} onClick={searchPressed} >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
               </button >
             </form>
