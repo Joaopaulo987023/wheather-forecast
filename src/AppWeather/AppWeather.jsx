@@ -41,14 +41,15 @@ export default function AppWeather() {
   
   
   return (
+    
 <div className={styles.container}>
-            <form className={styles.form} >
-              <FontAwesomeIcon icon={faLocationDot} />
-              <input type="search" placeholder='Buscar cidade' required value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
-              <button disabled={!search} onClick={searchPressed} >
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button >
-            </form>
+                <form className={styles.form} >
+                  <FontAwesomeIcon icon={faLocationDot} />
+                  <input type="search" placeholder='Buscar cidade' required value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
+                  <button disabled={!search} onClick={searchPressed} >
+                      <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  </button >
+                </form>
       {isLoading ? (<Loading/>) : weather &&(
       <div className={weather ?"weatherOpen":"weather" }>
         <div className={styles.headerWeather}>
